@@ -1,0 +1,4 @@
+[mcp_servers.grove]
+command = "grove-mcp"
+args = ["--root=."]
+startup_timeout_sec = 15
