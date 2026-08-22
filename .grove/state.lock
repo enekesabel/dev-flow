@@ -1,4 +1,275 @@
 @grove 1
 # AUTO-GENERATED. Do not edit. Use `grove` CLI.
-# checksum: sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+# checksum: sha256:6df37a76075af9d1be87003eaf82460482cc7fd38884f7ea7dfc772228c2a4d5
+g G-01 status=unverified fitness_kind=manual t_created=2026-08-22T13:32:15Z t_updated=2026-08-22T13:32:15Z "Define a DevFlow workflow for using Grove's node model and operational tools"
+  area: A-02
+  fitness_target: The workflow preserves approved DevFlow rules and provides the intended intent-alignment ergonomics.
 
+d D-01 status=accepted t_created=2026-08-22T11:56:11Z t_updated=2026-08-22T11:56:14Z "DevFlow scope"
+  context:
+    | The user defined the canonical project scope and removed Composer from it.
+  decision:
+    | DevFlow is the project name, work domain, skill name, and glossary scope. Composer is outside this scope.
+  consequences:
+    | Use DevFlow for the repository, skill, and glossary scope.
+
+d D-02 status=accepted t_created=2026-08-22T11:56:14Z t_updated=2026-08-22T11:56:18Z "DevFlow translation rules"
+  context:
+    | The user defined initiation and confirmation rules for the Grove node types.
+  decision:
+    | Areas, Themes, Goals, and Work require user confirmation. Agent-proposed Assumptions and Discoveries are recorded immediately. Record every user Question, and record an agent-initiated Question when the user answers it. A clearly stated or clearly restated Decision is accepted; simple approval of agent wording remains proposed.
+  consequences:
+    | Unconfirmed gated items remain suggestions.
+
+d D-03 status=accepted t_created=2026-08-22T11:56:18Z t_updated=2026-08-22T11:56:21Z "Run DevFlow after each user turn"
+  context:
+    | The user asked for a DevFlow checkpoint after each conversation turn.
+  decision:
+    | After each user turn, apply the DevFlow flow and report only confirmed Grove updates and suggested gated updates. Use full Grove type names in reports.
+  consequences:
+    | Recorded but unapproved items are not reported.
+
+d D-04 status=proposed t_created=2026-08-22T11:56:22Z t_updated=2026-08-22T11:56:24Z "DevFlow philosophy"
+  context:
+    | The user approved adding the agent-drafted DevFlow philosophy to the skill.
+  decision:
+    | Keep the agent aligned with clearly expressed user intent. Keep agent proposals distinct from user intent. Treat simple agreement as insufficient to turn agent wording into user intent. Require clear confirmation or restatement for direction-setting changes.
+  consequences:
+    | The workflow preserves exploration while preventing silent agent decisions about what to build.
+
+d D-05 status=proposed t_created=2026-08-22T11:56:25Z t_updated=2026-08-22T11:56:26Z "DevFlow turn flow"
+  context:
+    | The user approved adding the agent-drafted turn flow to the skill.
+  decision:
+    | After each user turn, identify meaningful candidate updates, classify their initiator and confirmation, apply the translation table, record allowed updates, keep gated updates as suggestions, and report only confirmed and gated updates.
+
+d D-06 status=accepted t_created=2026-08-22T12:20:50Z t_updated=2026-08-22T12:20:53Z "Project tooling must not bypass DevFlow"
+  context:
+    | The user wants project tooling to support the DevFlow workflow without turning it off or overriding it.
+  decision:
+    | Project tooling must not disable or override the DevFlow skill in this repository.
+  consequences:
+    | Tooling changes that alter whether DevFlow runs are treated as changes to DevFlow behavior.
+
+d D-07 status=accepted t_created=2026-08-22T13:25:23Z t_updated=2026-08-22T13:25:36Z "Grove default workflow is reference material, not the DevFlow workflow"
+  context:
+    | The DevFlow rules already established are the current baseline. Grove's default workflow is being examined to understand its guidance and capabilities.
+  options:
+    | OC1: Adopt Grove default workflow as-is.
+    | OC2: Study Grove default workflow, compare it with approved DevFlow rules, and keep only aligned parts.
+  decision:
+    | Study Grove default workflow as reference material; do not run or adopt it as the DevFlow workflow.
+  consequences:
+    | The DevFlow goal and later implementation must be based on approved DevFlow rules, with Grove findings used to identify compatible changes or gaps.
+  validation:
+    | Read Grove's workflow guidance and compare it with the accepted DevFlow rules before defining or changing the DevFlow skill workflow.
+
+q Q-01 status=answered cynefin=clear t_created=2026-08-22T11:56:27Z t_updated=2026-08-22T11:56:46Z "Does Grove have an always-on conversation mode?"
+  exit:
+    | Determine whether Grove can populate its graph during conversation without an explicit DevFlow checkpoint.
+  outcome:
+    | The local Grove skill provides CLI-driven mutation, not an always-on conversation mode. DevFlow must run after each user turn.
+
+q Q-02 status=answered cynefin=clear t_created=2026-08-22T11:56:30Z t_updated=2026-08-22T11:56:48Z "Does Grove provide a generic scratch state?"
+  exit:
+    | Determine where unapproved Grove candidates can live before persistence.
+  outcome:
+    | Grove has no generic scratch state. Proposed records persist in .grove/state.lock.
+
+q Q-03 status=answered cynefin=clear t_created=2026-08-22T11:56:33Z t_updated=2026-08-22T11:56:49Z "Can source be attached to every Grove node?"
+  exit:
+    | Determine whether Grove provides a native source field for user and agent provenance.
+  outcome:
+    | Grove has no native source field on every node. User and agent provenance remains a DevFlow convention.
+
+q Q-04 status=open cynefin=complex t_created=2026-08-22T11:56:36Z t_updated=2026-08-22T13:19:40Z "How should DevFlow use Goals and Work?"
+  why:
+    | The first candidate is evaluating Grove default workflow behavior, and the user wants to decide whether this belongs as a Goal, Discovery, Question, or Work item.
+  exit:
+    | Define how DevFlow should create, confirm, and use Goals and Work during dogfooding.
+
+q Q-05 status=answered cynefin=complicated t_created=2026-08-22T11:56:37Z t_updated=2026-08-22T12:50:54Z "How do Grove proposed records and lifecycles work?"
+  exit:
+    | Capture the meaning of proposed records and the lifecycle states for each Grove node type.
+  outcome:
+    | Each Grove node type has its own lifecycle. Proposed is a persistent non-final state, not scratch.
+
+q Q-06 status=answered cynefin=clear t_created=2026-08-22T11:56:40Z t_updated=2026-08-22T11:56:51Z "Can Themes be controlled manually?"
+  exit:
+    | Determine whether DevFlow can directly set Theme status.
+  outcome:
+    | Theme status is derived by Grove and is not set manually.
+
+q Q-07 status=open cynefin=complex t_created=2026-08-22T12:20:54Z t_updated=2026-08-22T12:20:54Z "Should a direct user instruction to change the DevFlow skill require an adoption Decision?"
+  exit:
+    | Define whether a direct user instruction can move directly to Work or must also create an accepted Decision.
+
+q Q-08 status=open cynefin=complex t_created=2026-08-22T12:20:55Z t_updated=2026-08-22T12:20:56Z "Should project tooling changes require an adoption Decision?"
+  exit:
+    | Define when a project tooling change is ordinary support work and when it changes DevFlow behavior.
+
+q Q-09 status=answered cynefin=complicated t_created=2026-08-22T12:20:56Z t_updated=2026-08-22T12:20:59Z "Can Grove detect a breaking change to the DevFlow skill automatically?"
+  exit:
+    | Determine which breaking or unsafe changes Grove can detect without a DevFlow-specific rule.
+  outcome:
+    | Grove enforces its graph invariants, lifecycle rules, Decision immutability, and Work readiness requirements. It does not infer semantic breaking changes to the DevFlow skill from file edits alone.
+
+q Q-10 status=answered cynefin=clear t_created=2026-08-22T12:20:59Z t_updated=2026-08-22T12:21:02Z "Why was the previous user turn not recorded by DevFlow?"
+  exit:
+    | Explain the missed checkpoint and reconcile the conflicting workflow instructions.
+  outcome:
+    | The prior turn followed the grilling flow boundary and skipped mutation. That conflicted with AGENTS.md and the always-on DevFlow turn flow.
+
+q Q-11 status=open cynefin=complex t_created=2026-08-22T12:47:41Z t_updated=2026-08-22T12:47:41Z "How can DevFlow prevent project tooling from bypassing it?"
+  exit:
+    | Define and validate how DevFlow can prevent project tooling from bypassing it.
+
+q Q-12 status=answered cynefin=clear t_created=2026-08-22T12:47:42Z t_updated=2026-08-22T12:47:44Z "Are Grove Themes permanent or temporary?"
+  exit:
+    | Determine whether durable DevFlow vocabulary should be represented as Themes or another Grove concept.
+  outcome:
+    | A Theme is an optional grouping of related Work with derived open or done status. It is not a permanent scope layer like an Area.
+
+q Q-13 status=answered cynefin=clear t_created=2026-08-22T12:50:45Z t_updated=2026-08-22T12:50:51Z "Why do answered Questions remain in Grove?"
+  exit:
+    | Determine whether answered Questions are retained as history or removed from active state.
+  outcome:
+    | Answered Questions are terminal records retained for history and provenance. grove list q --status=open shows only unresolved Questions.
+
+q Q-14 status=answered cynefin=complicated t_created=2026-08-22T12:50:48Z t_updated=2026-08-22T12:50:52Z "Can Grove ground project reasoning in files and detect drift?"
+  exit:
+    | Determine how file surfaces connect reasoning records to the codebase and what drift signals Grove can detect.
+  outcome:
+    | Grove can attach file surfaces to Areas, Work, and Discoveries and use them for coverage, triage, gate, and decay signals. It does not automatically invalidate every Decision when a file changes.
+
+q Q-15 status=answered cynefin=complicated t_created=2026-08-22T12:53:31Z t_updated=2026-08-22T12:53:34Z "How do Questions relate to Discoveries and other Grove records?"
+  exit:
+    | Describe how a Question can lead to an Assumption, Decision, Work item, or Discovery.
+  outcome:
+    | A Question records an unknown. Its outcome can lead to an Assumption, Decision, Work item, or Discovery. A Discovery is a durable invariant distilled from one or more process records, not a copy of the Question answer.
+
+q Q-16 status=open cynefin=complex t_created=2026-08-22T12:53:34Z t_updated=2026-08-22T12:57:15Z "Who may promote a Discovery from proposed to active?"
+  why:
+    | The user wants to decide whether Discovery promotion should remain a Question, become a Decision, or require a Goal and Work item.
+  exit:
+    | Define whether DevFlow requires explicit user confirmation before a proposed Discovery becomes active.
+
+q Q-17 status=answered cynefin=complicated t_created=2026-08-22T12:59:19Z t_updated=2026-08-22T13:03:01Z "How do Goals and Work relate?"
+  exit:
+    | Describe how Goals define outcomes and how Work contributes evidence and fitness progress.
+  outcome:
+    | A Goal is an outcome with a fitness function and belongs to an Area. Work is an executable unit linked to one or more Goals; completed Work contributes evidence and fitness progress to those Goals.
+
+q Q-18 status=answered cynefin=complicated t_created=2026-08-22T13:02:58Z t_updated=2026-08-22T13:06:05Z "How do answered Questions help in the long term?"
+  exit:
+    | Determine how answered Questions contribute to future project context and durable knowledge.
+  outcome:
+    | An answered Question preserves its title, status, recorded outcome, and Grove provenance. It does not preserve the full conversational deliberation.
+
+q Q-19 status=answered cynefin=clear t_created=2026-08-22T13:06:08Z t_updated=2026-08-22T13:06:11Z "Does an answered Question preserve the full reasoning trail?"
+  exit:
+    | Determine what Grove retains in the lock and journal compared with the original conversation.
+  outcome:
+    | Grove stores the Question record and its recorded outcome in state.lock. journal.log records mutation history and undo data, not the conversation deliberation. Full reasoning remains outside Grove unless explicitly recorded.
+
+q Q-20 status=answered cynefin=complicated t_created=2026-08-22T13:12:31Z t_updated=2026-08-22T13:12:34Z "Are answered Question outcomes automatically available in future sessions?"
+  exit:
+    | Determine when a future agent receives an answered Question outcome without explicitly looking it up.
+  outcome:
+    | The outcome is stored in state.lock and can be retrieved with grove show. It is not automatically loaded into every session. grove packet includes it when a Work item links the Question, and an active Discovery may be included when relevant.
+
+q Q-21 status=open cynefin=complicated t_created=2026-08-22T13:31:07Z t_updated=2026-08-22T13:31:12Z "How can Grove's workflow and commands support DevFlow ergonomics?"
+  why:
+    | The user wants to understand Grove's node lifecycles, commands, inspection and query mechanisms, and promotion workflow, and how they could support DevFlow ergonomics.
+  exit:
+    | Describe the relevant Grove workflow and commands, and identify how they could support the approved DevFlow rules without adopting Grove's default workflow wholesale.
+
+b B-01 status=proposed cynefin=complex t_created=2026-08-22T11:56:43Z t_updated=2026-08-22T11:56:44Z "After-turn checkpoints will surface meaningful updates without a separate scratch state"
+  vm:
+    | Use DevFlow across live turns and record missed or noisy candidates.
+
+b B-02 status=proposed cynefin=complex t_created=2026-08-22T11:56:45Z t_updated=2026-08-22T11:56:45Z "Defensive gates will not cause excessive approval prompts"
+  vm:
+    | Observe the number of approval prompts during live dogfooding and refine the gates if they become noisy.
+
+y Y-01 status=proposed t_created=2026-08-22T11:56:46Z t_updated=2026-08-22T11:56:47Z "Grove has no always-on conversation mode"
+  tags: Grove, DevFlow
+  surface: .agents/skills/grove/SKILL.md
+  invariant:
+    | Grove does not automatically populate its graph during conversation; DevFlow must invoke the checkpoint after each user turn.
+
+y Y-02 status=proposed t_created=2026-08-22T11:56:48Z t_updated=2026-08-22T11:56:49Z "Grove has no generic scratch state"
+  tags: Grove, DevFlow
+  surface: .agents/skills/grove/SKILL.md
+  invariant:
+    | Grove proposed records persist in .grove/state.lock; Grove has no separate generic scratch layer.
+
+y Y-03 status=proposed t_created=2026-08-22T11:56:49Z t_updated=2026-08-22T11:56:50Z "Grove has no native source field on every node"
+  tags: Grove, DevFlow
+  surface: .agents/skills/grove/SKILL.md
+  invariant:
+    | User and agent provenance is a DevFlow convention rather than a native source field on every Grove node.
+
+y Y-04 status=proposed t_created=2026-08-22T11:56:51Z t_updated=2026-08-22T11:56:52Z "Theme status is derived"
+  tags: Grove, DevFlow
+  surface: .agents/skills/grove/SKILL.md
+  invariant:
+    | Grove derives Theme status and does not allow agents to set it manually.
+
+y Y-05 status=proposed t_created=2026-08-22T12:50:51Z t_updated=2026-08-22T12:50:51Z "Answered Questions remain as terminal history"
+  tags: Grove, DevFlow
+  surface: .agents/skills/grove/SKILL.md
+  invariant:
+    | Answered Questions remain in Grove as terminal history and provenance; open-question views filter them out.
+
+y Y-06 status=proposed t_created=2026-08-22T12:50:52Z t_updated=2026-08-22T12:50:53Z "Grove grounds reasoning in file surfaces without automatic invalidation"
+  tags: Grove, DevFlow
+  surface: .agents/skills/grove/SKILL.md
+  invariant:
+    | Grove connects Areas, Work, and Discoveries to file surfaces and reports selected drift signals, but file changes do not automatically invalidate every Decision.
+
+y Y-07 status=proposed t_created=2026-08-22T12:50:54Z t_updated=2026-08-22T12:50:55Z "Accepted Decisions are immutable"
+  tags: Grove, DevFlow
+  surface: .agents/skills/grove/SKILL.md
+  invariant:
+    | An accepted Decision cannot be edited; a later Decision supersedes it when the choice changes.
+
+y Y-08 status=proposed t_created=2026-08-22T13:03:01Z t_updated=2026-08-22T13:03:02Z "Goals define outcomes and Work contributes evidence"
+  tags: Grove, DevFlow
+  surface: .agents/skills/grove/SKILL.md
+  invariant:
+    | Goals define outcomes with fitness functions. Work items execute against Goals and contribute acceptance evidence and fitness progress.
+
+y Y-09 status=proposed t_created=2026-08-22T13:03:03Z t_updated=2026-08-22T13:06:07Z "Answered Questions are source records for durable knowledge"
+  tags: Grove, DevFlow
+  surface: .agents/skills/grove/SKILL.md
+  invariant:
+    | An answered Question preserves its question and recorded outcome as source material; a Discovery or Decision carries a reusable conclusion forward.
+
+y Y-10 status=proposed t_created=2026-08-22T13:06:11Z t_updated=2026-08-22T13:06:12Z "Grove stores conclusions, not full deliberation"
+  tags: Grove, DevFlow
+  surface: .agents/skills/grove/SKILL.md
+  invariant:
+    | Grove preserves recorded conclusions and mutation history, not the full reasoning process that produced them.
+
+y Y-11 status=proposed t_created=2026-08-22T13:12:34Z t_updated=2026-08-22T13:12:35Z "Answered Question outcomes are retrievable but not automatically loaded"
+  tags: Grove, DevFlow
+  surface: .agents/skills/grove/SKILL.md
+  invariant:
+    | An answered Question is available on demand or through linked Work context; it is not globally injected into every future session.
+
+a A-01 status=present t_created=2026-08-22T12:47:39Z t_updated=2026-08-22T12:47:39Z "DevFlow development"
+
+a A-02 status=present t_created=2026-08-22T12:47:40Z t_updated=2026-08-22T12:47:40Z "DevFlow skill"
+
+e Y-01 distills Q-01 t_created=2026-08-22T11:56:46Z
+e Y-02 distills Q-02 t_created=2026-08-22T11:56:48Z
+e Y-03 distills Q-03 t_created=2026-08-22T11:56:49Z
+e Y-04 distills Q-06 t_created=2026-08-22T11:56:51Z
+e Y-05 distills Q-13 t_created=2026-08-22T12:50:51Z
+e Y-06 distills Q-14 t_created=2026-08-22T12:50:52Z
+e Y-07 distills Q-05 t_created=2026-08-22T12:50:54Z
+e Y-08 distills Q-17 t_created=2026-08-22T13:03:01Z
+e Y-09 distills Q-18 t_created=2026-08-22T13:03:03Z
+e Y-10 distills Q-19 t_created=2026-08-22T13:06:11Z
+e Y-11 distills Q-20 t_created=2026-08-22T13:12:34Z
