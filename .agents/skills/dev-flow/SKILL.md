@@ -1,6 +1,7 @@
 ---
 name: dev-flow
-description: Use on every task in this repository to keep work aligned with user intent.
+description: Use Dev Flow to align work with user intent and preserve task context.
+disable-model-invocation: true
 ---
 
 # DevFlow
@@ -66,11 +67,16 @@ Before letting the user accept a new **Proposal** check existing **Accepted** an
 
 
 
+## Configuration
+
+`CONFIG.md` is the committed configuration for this skill installation. It controls the context storage conventions used by the agent. Read [CONFIG.md](CONFIG.md) and the [configuration protocol](references/config-protocol.md) at the start of every Dev Flow invocation. The protocol explains how to compare the effective configuration with the defaults in `assets/CONFIG.template.md` and how to handle setup changes.
+
 ## Context Management
 
 - Pay attention to how close you are to context compaction.
-- Keep **Attention Surfaces** and **Proposals** tracked and growing throughout the whole conversation
-- When context compaction happens, make sure you preserve them without compacting them, with special attention to **Proposal Specificity**.
+- Persist the **Attention Surfaces** and **Proposals** for the active conversation in the configured context file. Before creating or updating that file, read the [context schema](references/context-schema.md).
+- At the start of work and after context compaction, read the active context file when it exists. Update it whenever the tracked context changes, preserving each proposal's established specificity in its content and the schema's stable IDs.
+- When context compaction happens, make sure the file contains the context that must survive it.
 - After context compaction: send a message to the user's chat showing them what you preserved
 - Upon request of sharing **Dev Flow Context** share the Context you gathered so far
 
@@ -139,4 +145,3 @@ It's also possible to alternate between the flows if user behaviour indicates so
 - Do a quick **Plan Alignment** on the selected items with the user
 - Make sure the User accepted or rejected **Proposals** that are necessary to complete the slice, but do not force them to resolve non-blocking **Open Proposals**.
 - Do not implement any **Open Proposal**
-
