@@ -13,9 +13,11 @@ delivers all three as fact while the obligation to merge them lives in the agent
 
 ## Consequences
 
-- The budget depends on the window. Message text was 63% of a measured design session, so at
-  a large window everything can come back, and at a small one the Coordinator's older
-  messages are dropped first.
+- The budget is set by the delivery channel, not by the context window. `UserPromptSubmit`
+  `additionalContext` is capped near 10,000 bytes, beyond which the harness substitutes a 2KB
+  stub. So the payload shrinks in a fixed order: the Ledger never, the user's messages next,
+  the Coordinator's own messages first. In practice the Coordinator's messages rarely fit, and
+  the payload says what it left out.
 - User messages are recovered in full because they are small and because they index the gaps:
   an approval with no matching Proposal proves a decision was made after the last good Ledger.
 - What cannot be reconstructed gets one sentence to the user naming the specific gap. Anything

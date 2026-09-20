@@ -18,19 +18,20 @@ CLI:
 import sys, os, json, argparse
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import checker as C
+import ledger_check as C
 
-# Per-message and total budgets for the verbatim user turns handed back.
+# Per-message and total budgets for the verbatim turns handed back.
 # Turns are quoted verbatim; anything dropped is marked in place.
-PER_TURN_CHARS = int(os.environ.get("EXP9_PER_TURN", 4000))
-HEAD_CHARS = int(os.environ.get("EXP9_HEAD", 3000))
-TOTAL_CHARS = int(os.environ.get("EXP9_TOTAL", 24000))
+PER_TURN_CHARS = int(os.environ.get("DEVFLOW_PER_TURN", 4000))
+HEAD_CHARS = int(os.environ.get("DEVFLOW_HEAD", 3000))
+TOTAL_CHARS = int(os.environ.get("DEVFLOW_TOTAL", 24000))
+COORD_CHARS = int(os.environ.get("DEVFLOW_COORD", 6000))
 
 # VERIFIED: UserPromptSubmit additionalContext of 10,000 bytes is delivered
 # inline; 10,020 bytes is replaced by "<persisted-output> ... Preview (first
 # 2KB)" plus a file path, so only ~2KB reaches the model.  The recovery payload
 # must therefore stay under that limit or it silently truncates.
-CONTEXT_BUDGET = int(os.environ.get("EXP9_CTX_BUDGET", 9000))
+CONTEXT_BUDGET = int(os.environ.get("DEVFLOW_CTX_BUDGET", 9000))
 
 
 def _text(msg):
@@ -60,6 +61,11 @@ def scan(path):
                 # tool-result turns carry no user text; they are not user turns
                 if t.strip():
                     items.append({"idx": i, "kind": "user", "text": t})
+            elif d.get("type") == "assistant" and msg.get("role") == "assistant":
+                t = _text(msg)
+                # tool_use blocks carry no assistant prose; only text counts
+                if t.strip():
+                    items.append({"idx": i, "kind": "assistant", "text": t})
     return items
 
 
@@ -77,16 +83,22 @@ def extract(path):
             last_good = (n, C.extract_block(C.strip_analysis(it["text"])))
     compacts_seen = sum(1 for it in items if it["kind"] == "compact")
     if last_good is None:
-        turns = [it["text"] for it in items if it["kind"] == "user"]
-        return {"ledger": None, "ledger_from_compaction": None,
-                "compactions_in_transcript": compacts_seen,
-                "user_turns": turns, "transcript": path}
-    n, blk = last_good
-    good_ordinal = sum(1 for it in items[:n + 1] if it["kind"] == "compact")
-    turns = [it["text"] for it in items[n + 1:] if it["kind"] == "user"]
+        tail = items
+        good_ordinal = None
+        blk = None
+    else:
+        n, blk = last_good
+        good_ordinal = sum(1 for it in items[:n + 1] if it["kind"] == "compact")
+        tail = items[n + 1:]
     return {"ledger": blk, "ledger_from_compaction": good_ordinal,
             "compactions_in_transcript": compacts_seen,
-            "user_turns": turns, "transcript": path}
+            "user_turns": [it["text"] for it in tail if it["kind"] == "user"],
+            # The Coordinator's own prose since the last good ledger. Its recent
+            # Proposals live here, and they are the part a user "yes" proves
+            # happened but cannot reconstruct. Lowest priority in the payload:
+            # the delivery channel is small and the user turns index the gaps.
+            "coordinator_turns": [it["text"] for it in tail if it["kind"] == "assistant"],
+            "transcript": path}
 
 
 def _clip(t):
@@ -146,6 +158,28 @@ def build_context(info, problems):
             L.append("--- recovered user message %d of %d ---" % (i, len(turns)))
             L.append(clipped)
             L.append("--- end recovered user message %d of %d ---" % (i, len(turns)))
+
+    coord = info.get("coordinator_turns") or []
+    if coord and COORD_CHARS > 0:
+        room, kept = COORD_CHARS, []
+        for t in reversed(coord):                    # newest first while choosing
+            clipped, _ = _clip(t)
+            if len(clipped) > room:
+                break
+            room -= len(clipped)
+            kept.append(clipped)
+        kept.reverse()                               # restore conversational order
+        if kept:
+            L.append("")
+            L.append("Your own last %d message(s) before that point were also read back, "
+                     "verbatim and in order, out of %d recorded. Proposals you made after the "
+                     "recovered ledger was written are in these."
+                     % (len(kept), len(coord)))
+            for i, t in enumerate(kept, 1):
+                L.append("")
+                L.append("--- your recovered message %d of %d ---" % (i, len(kept)))
+                L.append(t)
+                L.append("--- end your recovered message %d of %d ---" % (i, len(kept)))
     return "\n".join(L)
 
 
@@ -157,19 +191,24 @@ def build_context_bounded(info, problems):
     given whatever room is left, newest-last, and the count actually dropped is
     stated in the payload so the coordinator knows the recovery is partial.
     """
-    global TOTAL_CHARS, PER_TURN_CHARS, HEAD_CHARS
-    saved = (TOTAL_CHARS, PER_TURN_CHARS, HEAD_CHARS)
+    global TOTAL_CHARS, PER_TURN_CHARS, HEAD_CHARS, COORD_CHARS
+    saved = (TOTAL_CHARS, PER_TURN_CHARS, HEAD_CHARS, COORD_CHARS)
     try:
-        for total, per_turn in ((24000, 4000), (12000, 4000), (6000, 3000),
-                                (4000, 2000), (2000, 1200), (600, 600), (0, 0)):
-            TOTAL_CHARS, PER_TURN_CHARS = total, per_turn
+        # The Coordinator's own messages go first when room runs short: the user's
+        # turns are what make a gap nameable, so they outrank prose the Coordinator
+        # can be asked about instead.
+        for total, per_turn, coord in ((24000, 4000, 6000), (24000, 4000, 0),
+                                       (12000, 4000, 0), (6000, 3000, 0),
+                                       (4000, 2000, 0), (2000, 1200, 0),
+                                       (600, 600, 0), (0, 0, 0)):
+            TOTAL_CHARS, PER_TURN_CHARS, COORD_CHARS = total, per_turn, coord
             HEAD_CHARS = max(1, int(per_turn * 0.75))
             ctx = build_context(info, problems)
             if len(ctx) <= CONTEXT_BUDGET:
                 return ctx
         return ctx
     finally:
-        TOTAL_CHARS, PER_TURN_CHARS, HEAD_CHARS = saved
+        TOTAL_CHARS, PER_TURN_CHARS, HEAD_CHARS, COORD_CHARS = saved
 
 
 def main():

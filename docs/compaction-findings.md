@@ -171,6 +171,10 @@ Any checker that examines only the `<summary>` section will score both cases as 
   `Notification` does not.
 - The `source` field on `UserPromptSubmit` is **never emitted** in 2.1.278 (compiled out).
   Detect wakeups by sniffing `prompt` for `<task-notification>`.
+- **`UserPromptSubmit` `additionalContext` is capped at about 10,000 bytes.** 10,000 is
+  delivered inline; 10,020 is replaced by a `<persisted-output>` stub with a 2KB preview and a
+  file path, so most of the payload never reaches the model. Anything handed back through this
+  channel has to fit, which is a far harder limit than the context window.
 - `UserPromptSubmit` `decision: "block"` suppresses the whole wakeup; the reason goes to the
   output stream, not the model.
 - Foreground dispatch puts the `PostToolUse` output and the tool result in the **same user

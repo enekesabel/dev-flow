@@ -129,7 +129,9 @@ established, and no Open one, because a Worker must not settle something the use
 Say what is explicitly out of scope. The Brief carries intent, so the tracking apparatus stays
 behind: no identifiers, no Attention Surfaces.
 
-Write the Brief into the dispatch prompt yourself. Do not assume anything else will attach it.
+Write the Brief into the dispatch prompt yourself, under a `## Brief` heading. Nothing else can
+write it for you: the Brief comes from what this conversation established, which only you hold.
+A dispatch without one is refused and handed back to you.
 
 ## When a Worker finishes
 

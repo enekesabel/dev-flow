@@ -212,7 +212,8 @@ def main():
     if a.prev_from_transcript:
         cs = compact_summaries_from_transcript(a.prev_from_transcript)
         b = extract_block(strip_analysis(cs[a.index])) if cs else None
-        sys.stdout.write(BEGIN + (b or "") + END if b else "")
+        # Sentinels stand alone on their own line, or the block cannot be re-parsed.
+        sys.stdout.write("%s\n%s\n%s\n" % (BEGIN, b, END) if b else "")
         return
 
     raw = sys.stdin.read() if a.stdin_summary else open(a.summary_file).read()

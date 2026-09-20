@@ -89,11 +89,12 @@ project-sourced frontmatter hooks in untrusted folders.
 
 **There is no Worker agent type.** Workers are whatever the user already has.
 
-**The Brief is delivered by rewriting the dispatch.** A `PreToolUse` hook matched on the Agent
-tool replaces the dispatch prompt with one containing the Brief. `updatedInput` is a full
-replacement, so the hook echoes the complete tool input with its edits applied. Failure is a
-loud schema error, which is the desired behaviour: a dispatch that cannot be briefed should not
-proceed silently.
+**The Coordinator writes the Brief and a hook enforces it.** The Brief comes from what the
+conversation established, which lives only in the Coordinator's context, so no hook can compose
+it. The Coordinator writes it under a `## Brief` heading, and a `PreToolUse` hook matched on the
+Agent tool denies any dispatch lacking one, handing it back with the reason. See the amendment
+to ADR 0001. The hook fails open: an unbriefed dispatch getting through is better than every
+dispatch in the session wedging.
 
 **Brief content.** Plan Alignment output filtered to what the task touches. Accepted and
 Rejected Proposals only. No Open Proposals, no Proposal IDs, no Attention Surfaces, no
@@ -117,9 +118,14 @@ summary section produces false losses.
 
 **Repair reads the transcript.** On a failed check, a deterministic extractor pulls the last
 good Ledger from the preceding compaction summary entry, every user message since, and the
-Coordinator's most recent messages up to a token budget. Per ADR 0002. The budget is sized
-against the window: large windows can take everything, small ones drop the Coordinator's older
-messages first.
+Coordinator's most recent messages. Per ADR 0002.
+
+**The budget is set by the delivery channel, not by the window.** `UserPromptSubmit`
+`additionalContext` is capped near 10,000 bytes, beyond which the harness swaps in a 2KB stub.
+So the payload shrinks to fit in a fixed order: the recovered Ledger is never dropped, because
+nothing else can reconstruct it; the user's messages come next, because they are what make a
+gap nameable; the Coordinator's own messages go first when room runs short, because it can be
+asked about those instead. The payload states what it had to leave out.
 
 **The alert is a fact, the duty is in the prompt.** `PostCompact` cannot inject, so it writes
 a flag. The next `UserPromptSubmit` returns the recovered material as `additionalContext`,
