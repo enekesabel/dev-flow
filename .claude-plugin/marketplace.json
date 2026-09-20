@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "dev-flow",
+  "version": "0.1.0",
+  "description": "The DevFlow coordinator plugin",
+  "owner": {
+    "name": "Abel Enekes",
+    "email": "enekes.abel@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "dev-flow",
+      "description": "A coordinator agent that holds your intent and carries it into the work it delegates",
+      "source": "./",
+      "category": "workflow"
+    }
+  ]
+}
