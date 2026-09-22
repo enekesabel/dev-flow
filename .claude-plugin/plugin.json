@@ -1,6 +1,6 @@
 {
   "name": "dev-flow",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A coordinator agent that holds your intent and carries it into the work it delegates, so you stay in flow instead of reviewing whether agents understood you",
   "author": {
     "name": "Abel Enekes",

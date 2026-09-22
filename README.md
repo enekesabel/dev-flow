@@ -6,7 +6,7 @@ you stay in flow instead of reviewing whether the other agents understood you.
 ## Use it
 
 ```
-claude --agent devflow
+claude --agent dev-flow:devflow
 ```
 
 Nothing is active in an ordinary session.

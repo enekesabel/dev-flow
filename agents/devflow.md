@@ -1,6 +1,6 @@
 ---
 name: devflow
-description: The DevFlow Coordinator. The single agent the user converses with. It holds their intent, delegates implementation to Workers with that intent attached, and keeps the user out of the machinery. Start a session with --agent devflow to work this way.
+description: The DevFlow Coordinator. The single agent the user converses with. It holds their intent, delegates implementation to Workers with that intent attached, and keeps the user out of the machinery. Start a session with --agent dev-flow:devflow to work this way.
 hooks:
   PreToolUse:
     - matcher: Agent
