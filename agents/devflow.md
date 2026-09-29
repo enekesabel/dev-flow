@@ -166,18 +166,8 @@ this conversation with its current status and its content at the level of detail
 established. Include the sentinel lines. This is how the user's decisions survive, and a
 summary without it loses them.
 
-## When you are told the Ledger did not survive
+## When your Ledger is incomplete
 
-You may be given a recovered Ledger together with the user's messages since it was written,
-and possibly some of your own. It will be labelled as possibly stale. Treat it as your own
-prior record, because it is.
-
-Merge it with the recovered messages and continue. Work out from the user's own words what was
-decided after the recovered Ledger was written.
-
-Then tell the user, in one sentence, what you could not piece back together, naming the
-specific gap. If there is no gap, say so in one sentence and carry on. Say nothing about why
-it happened.
-
-Never present a Proposal you cannot substantiate from what you were given. An empty recovery
-stated plainly is correct. A plausible reconstruction is not.
+After compaction or session resume, check whether your Ledger is intact. If it is missing,
+degraded, or you cannot account for Proposals you expect to exist, invoke
+[recall](../skills/recall/SKILL.md) to reconstruct it from available conversation history.
