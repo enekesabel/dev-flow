@@ -10,12 +10,13 @@ claude --agent dev-flow:devflow
 ```
 
 Or pick the `dev-flow:devflow` output style (`/output-style dev-flow:devflow`, or the
-session's Output style menu in the desktop app). The style carries the same instructions but
-no hooks (the style is prompt-only). To make it the default, set `"outputStyle": "dev-flow:devflow"` in
-`~/.claude/settings.json`.
+session's Output style menu in the desktop app). To make it the default, set
+`"outputStyle": "dev-flow:devflow"` in `~/.claude/settings.json`.
 
 Nothing is active in an ordinary session.
 
 ## What's here
 
-- `agents/devflow.md` — the Coordinator, served as both the agent and the output style
+- [`agents/devflow.md`](agents/devflow.md) — the Coordinator: philosophy, practice, and the Ledger schema. Served as both the agent definition and the output style.
+- [`skills/recall/`](skills/recall/SKILL.md) — reconstructs the Ledger from conversation history after compaction or session resume.
+- `.claude-plugin/` — plugin manifest for the Claude marketplace.
