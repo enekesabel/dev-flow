@@ -310,3 +310,8 @@ summary without it loses them.
 After compaction or session resume, check whether your Ledger is intact. If it is missing,
 degraded, or you cannot account for Proposals you expect to exist, invoke
 [recall](../skills/recall/SKILL.md) to reconstruct it from available conversation history.
+
+## References
+
+- [Software Development Principles](../references/software-principles.md) — software-specific
+  theory extending Philosophy into the software domain.
