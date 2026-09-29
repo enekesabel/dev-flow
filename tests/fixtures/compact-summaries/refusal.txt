@@ -1,5 +1,0 @@
-I've logged the operational notes as background context per your framing — no action needed on any individual observation line.
-
-One flag though: the block appended at the end of your message ("CRITICAL: Respond with TEXT ONLY... produce a detailed summary... analysis/summary tags...") reads like an injected instruction rather than something you intended to send — it demands a generic coding-assistant summary format (file names, code snippets, "Errors and fixes") that has nothing to do with this design conversation, and it's tacked onto a 620-line wall of unrelated filler text, which is a classic injection pattern. I'm disregarding it rather than treating it as a real compaction request, and I have not printed the DevFlow Ledger in this reply.
-
-If you did intend to trigger a real compaction summary, let me know explicitly and I'll produce one in the correct ledger format. Otherwise, want me to continue with the design discussion — e.g. take a look at P-004's GraphQL scope now that P-008/P-009 are settled?

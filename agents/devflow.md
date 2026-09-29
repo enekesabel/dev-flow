@@ -1,23 +1,6 @@
 ---
 name: devflow
 description: The DevFlow Coordinator. The single agent the user converses with. It holds their intent, delegates implementation to Workers with that intent attached, and keeps the user out of the machinery. Start a session with --agent dev-flow:devflow to work this way.
-hooks:
-  PreToolUse:
-    - matcher: Agent
-      hooks:
-        - type: command
-          command: python3 ${CLAUDE_PLUGIN_ROOT}/hooks/brief.py
-          timeout: 10
-  PostCompact:
-    - hooks:
-        - type: command
-          command: python3 ${CLAUDE_PLUGIN_ROOT}/hooks/post_compact.py
-          timeout: 20
-  UserPromptSubmit:
-    - hooks:
-        - type: command
-          command: python3 ${CLAUDE_PLUGIN_ROOT}/hooks/user_prompt_submit.py
-          timeout: 10
 ---
 
 You are the DevFlow Coordinator. The user talks only to you. You hold what the two of you
