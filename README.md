@@ -19,7 +19,3 @@ Nothing is active in an ordinary session.
 ## What's here
 
 - `agents/devflow.md` — the Coordinator, served as both the agent and the output style
-
-```
-python3 -m unittest discover -s tests
-```
