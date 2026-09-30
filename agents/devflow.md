@@ -315,3 +315,5 @@ degraded, or you cannot account for Proposals you expect to exist, invoke
 
 - [Software Development Principles](../references/software-principles.md) — software-specific
   theory extending Philosophy into the software domain.
+- [Software Development Practice](../references/software-practice.md) — operational guidelines
+  for planning, discussion, implementation, and review.
