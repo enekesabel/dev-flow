@@ -38,52 +38,35 @@ Development lens, and a managed service through the Physical lens. That is not a
 resolve — it is the reason multiple lenses exist. The right lens is the one that answers
 the question you are asking.
 
-## Writing an ARCHITECTURE.md
+## The boundary
 
-An architecture document captures what the code cannot easily show: the system's structure at
-a level above any single codebase. Document the Context and Containers. Components are
-inferable from code; documenting them adds maintenance burden for limited value.
+Identify the boundary first, then what crosses it.
 
-Leave scenarios out of the document: architecture is structure, scenarios are behavior and
-change with every feature. Use them to test the picture instead. A flow that cannot be traced
-through the containers and the relevant lenses means the picture is incomplete.
+- **Actors** — who or what comes to the system with a goal: users, operators, other software
+  that uses it.
+- **External systems** — other software systems outside the boundary that provide a capability
+  the system relies on; the system's team does not own or have responsibility for them (C4).
 
-### Context
+## Containers
 
-Look at the system from outside. Apply systems thinking: identify the boundary first, then
-what crosses it.
+A container is a runtime unit inside the boundary: something that needs to be running for the
+system to work (C4). Containers are the system's own: its team builds them or is responsible
+for running them. Name each by its role; what it is built with and where it runs belong to its
+technology, per environment.
 
-- **What the system does** — one or two sentences. The premise, not the feature list.
-- **Actors** — who or what interacts with the system from outside. Users, operators,
-  external services, scheduled jobs that trigger it.
-- **Data entry points** — where data enters the system boundary. UI, public API, webhooks,
-  file imports, message subscriptions.
-- **Data exit points** — where data leaves. Responses, outbound API calls, notifications,
-  exports, events published to external consumers.
-- **External systems** — what the system depends on or feeds into beyond its boundary.
+For example:
+- an application or service
+- a worker or scheduled job
+- a data store
+- a queue
 
-An external system is another software system outside the boundary: one the system's team
-does not own or have responsibility for, that the system depends on or that depends on it
-(C4).
+A single-page app is its own container even when the backend serves it: it runs separately
+from the backend. A library compiled into an application is part of that container. Code that
+another party builds and runs belongs to that party's external system, even when it runs
+inside one of the system's containers, such as an embedded third-party widget.
 
-### Containers
+## Documenting and visualizing
 
-Look inside the system. Identify the separate runtime units and how they communicate.
-
-- **Each container** — name it, state what it is responsible for, note its technology.
-- **Communication** — how containers talk to each other. Synchronous (HTTP, gRPC) or
-  asynchronous (message broker, event bus). Name the protocol, not just the arrow.
-- **Boundary mapping** — which containers sit at the system boundary, handling data entry
-  and exit points identified in Context.
-
-Write down what actually runs, not what the code implies. Something is a container when
-either criterion holds:
-
-- **Separate deployment** — independently deployable. A Docker container, a Lambda function,
-  a managed service, a widget with its own build pipeline.
-- **Separate runtime boundary** — runs in a different process or environment, even if
-  deployed together. A browser-side SPA served by the backend runs in the user's browser,
-  not on the server. It is a container.
-
-A library compiled into the application satisfies neither — it is not a container.
+- To write an architecture document, follow [references/architecture-document.md](references/architecture-document.md).
+- To visualize the architecture, follow [references/architecture-visualization.md](references/architecture-visualization.md).
 
