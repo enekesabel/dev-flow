@@ -43,39 +43,51 @@ it, or `inferred: <why>`, the indirect signal it rests on.
   - Provides: <the capability the system relies on it for>
   - Evidence: <evidence>
 
-### Environments
-- **<environment>**: <what it is for>
-  - Evidence: <evidence>
-  - Hosting:
-    - <host>
-    - <host>
-
 ## Containers
 
 ### <container>
 - Responsibility: <what it owns>
+- Technology: <what it is built with, the same in every environment>
 - Evidence: <evidence>
-- Technology:
-  - <environments>: <stack> on <host>
-    - Evidence: <evidence>
 
 ## Communication
-- **<initiator> → <target>**: <protocol>
+- **<initiator> → <target>**
   - Flows:
     - → <what moves with the call>
     - ← <what comes back>
   - Evidence: <evidence>
+
+## Environments
+
+### <environment>
+- Purpose: <what it is for>
+- Evidence: <evidence>
+- Containers:
+  - **<container>**: <how it runs here>
+    - Deployment node: <the specific instance it runs on>
+    - Evidence: <evidence>
+- External systems:
+  - **<system>**: <how it is represented here>
+    - Evidence: <evidence>
 ```
 
-A Technology entry's host must be listed under Hosting in every environment the entry names,
-and its evidence must cover every environment it names.
+A container's Technology holds only what is the same in every environment; leave it out when
+nothing is.
 
-Communication lists every connection that involves a container: between containers, and
-between a container and an actor or external system. A connection is one initiator, one
-target, and one protocol. Its flows are the data it carries: `→` moves with the initiator's
-call, `←` comes back to it. List each connection once, grouped by its initiator: actors
-first, then external systems, then containers, each in the order the document defines them.
-Within one initiator, order the targets the same way.
+Communication lists every connection that involves a container. Either end can be an actor, an
+external system, or a container. A connection is one initiator and one target. Its flows are
+the data it carries: `→` moves with the initiator's call, `←` comes back to it. List each
+connection once, grouped by its initiator: actors first, then external systems, then
+containers, each in the order the document defines them. Within one initiator, order the
+targets the same way.
+
+Every environment lists every container and every external system. A deployment node is the
+specific instance a container runs on (C4), such as a cluster, a server, or a project, not a
+kind of technology; containers that share an instance use the same name. A container that does
+not run in an environment says so and has no deployment node.
+
+Describe how a container runs in an environment by what actually runs there, such as an image
+or a managed service, without repeating its Technology or its deployment node.
 
 See [architecture-document-example.md](architecture-document-example.md) for a filled-in
 example.

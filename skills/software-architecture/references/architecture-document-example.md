@@ -31,156 +31,222 @@ Ledgerly lets small businesses send invoices and get paid online.
   - Provides: sign-in for business users
   - Evidence: inferred: OIDC settings in `api/config/auth.py` name no provider
 
-### Environments
-- **local**: development on a laptop
-  - Evidence: verified: `docker-compose.yml`
-  - Hosting:
-    - Vite dev server
-    - Docker Compose
-- **test**: automated tests in CI
-  - Evidence: verified: `.ci/pipeline.yml`
-  - Hosting:
-    - CI runner
-- **staging**: pre-release checks against production-like services
-  - Evidence: verified: `infra/staging/`
-  - Hosting:
-    - Static hosting
-    - Container platform
-    - Managed services
-- **production**: serves real customers
-  - Evidence: verified: `infra/production/`
-  - Hosting:
-    - Static hosting
-    - Container platform
-    - Managed services
-
 ## Containers
 
 ### Web app
 - Responsibility: the screens for business users and the public invoice page for customers
+- Technology: TypeScript single-page app
 - Evidence: verified: `web/`
-- Technology:
-  - local: TypeScript single-page app on Vite dev server
-    - Evidence: verified: `web/vite.config.ts`
-  - test: TypeScript single-page app on CI runner
-    - Evidence: verified: `.ci/pipeline.yml`
-  - staging, production: built TypeScript single-page app on Static hosting
-    - Evidence: verified: `infra/staging/web.tf`, `infra/production/web.tf`
 
 ### API service
 - Responsibility: invoices, customers, payments, and API keys
+- Technology: Python web service
 - Evidence: verified: `api/`
-- Technology:
-  - local: Python web service on Docker Compose
-    - Evidence: verified: `docker-compose.yml`
-  - test: Python web service on CI runner
-    - Evidence: verified: `.ci/pipeline.yml`
-  - staging, production: Python web service on Container platform
-    - Evidence: verified: `infra/staging/api.tf`, `infra/production/api.tf`
 
 ### Invoice database
 - Responsibility: stored invoices, customers, payments, and accounts
+- Technology: PostgreSQL
 - Evidence: verified: `api/db/migrations/`
-- Technology:
-  - local: PostgreSQL on Docker Compose
-    - Evidence: verified: `docker-compose.yml`
-  - test: PostgreSQL on CI runner
-    - Evidence: verified: `.ci/pipeline.yml`
-  - staging, production: managed PostgreSQL on Managed services
-    - Evidence: verified: `infra/staging/database.tf`, `infra/production/database.tf`
 
 ### PDF renderer
 - Responsibility: turns invoices into PDFs
+- Technology: headless-browser render service
 - Evidence: verified: `renderer/`
-- Technology:
-  - local: headless-browser render service on Docker Compose
-    - Evidence: verified: `docker-compose.yml`
-  - test: headless-browser render service on CI runner
-    - Evidence: verified: `.ci/pipeline.yml`
-  - staging, production: headless-browser render service on Container platform
-    - Evidence: verified: `infra/staging/renderer.tf`, `infra/production/renderer.tf`
 
 ### Job queue
 - Responsibility: holds e-mail and reminder jobs until the worker takes them
 - Evidence: verified: `api/jobs/`
-- Technology:
-  - local: Redis on Docker Compose
-    - Evidence: verified: `docker-compose.yml`
-  - test: in-memory queue on CI runner
-    - Evidence: verified: `api/tests/conftest.py`
-  - staging, production: managed message queue on Managed services
-    - Evidence: inferred: `api/config/queue.py` reads a queue URL from the environment; no infrastructure definition in this repository
 
 ### Worker
 - Responsibility: sends invoice and reminder e-mails, and finds overdue invoices for reminders
+- Technology: Python worker process
 - Evidence: verified: `worker/`
-- Technology:
-  - local: Python worker process on Docker Compose
-    - Evidence: verified: `docker-compose.yml`
-  - test: Python worker process on CI runner
-    - Evidence: verified: `.ci/pipeline.yml`
-  - staging, production: Python worker process on Container platform
-    - Evidence: verified: `infra/staging/worker.tf`, `infra/production/worker.tf`
 
 ## Communication
-- **Business users → Web app**: HTTPS
+- **Business users → Web app**
   - Flows:
     - → invoice and settings edits
     - ← invoices and PDF downloads
   - Evidence: verified: `web/src/routes/`
-- **Customers → Web app**: HTTPS
+- **Customers → Web app**
   - Flows:
     - → invoice link opens
     - ← invoice view and PDF download
   - Evidence: verified: `web/src/routes/pay/`
-- **Accounting tools → API service**: HTTPS REST
+- **Accounting tools → API service**
   - Flows:
-    - → read requests
+    - → invoice and payment queries
     - ← invoices and payments
   - Evidence: verified: `api/routes/public.py`
-- **Payment provider → API service**: HTTPS webhook
+- **Payment provider → API service**
   - Flows:
     - → payment results
   - Evidence: verified: `api/routes/webhooks.py`
-- **Web app → Payment provider**: HTTPS (provider-hosted form)
+- **Web app → Payment provider**
   - Flows:
     - → card details
     - ← payment confirmation
   - Evidence: verified: `web/src/routes/pay/checkout.ts`
-- **Web app → Identity provider**: OIDC redirect
+- **Web app → Identity provider**
   - Flows:
     - → sign-in request
     - ← identity token
   - Evidence: inferred: OIDC settings in `api/config/auth.py`
-- **Web app → API service**: HTTPS JSON
+- **Web app → API service**
   - Flows:
     - → invoice and settings edits
     - ← invoices, payment status, PDFs
   - Evidence: verified: `web/src/api/client.ts`
-- **API service → Invoice database**: SQL
+- **API service → Accounting tools**
+  - Flows:
+    - → invoice and payment updates
+  - Evidence: verified: `api/webhooks/outgoing.py`
+- **API service → Invoice database**
   - Flows:
     - → invoice, customer, and payment writes
     - ← stored records
   - Evidence: verified: `api/db/`
-- **API service → PDF renderer**: HTTP
+- **API service → PDF renderer**
   - Flows:
     - → invoice data
     - ← rendered PDFs
   - Evidence: verified: `api/pdf/client.py`
-- **API service → Job queue**: queue messages
+- **API service → Job queue**
   - Flows:
     - → e-mail and reminder jobs
   - Evidence: verified: `api/jobs/enqueue.py`
-- **Worker → Email provider**: HTTPS API
+- **Worker → Email provider**
   - Flows:
     - → invoice and reminder e-mails
   - Evidence: verified: `worker/mail/sender.py`
-- **Worker → Invoice database**: SQL
+- **Worker → Invoice database**
   - Flows:
     - ← overdue invoices
   - Evidence: verified: `worker/reminders.py`
-- **Worker → Job queue**: queue messages
+- **Worker → Job queue**
   - Flows:
     - ← e-mail and reminder jobs
   - Evidence: verified: `worker/main.py`
+
+## Environments
+
+### local
+- Purpose: development on a laptop
+- Evidence: verified: `docker-compose.yml`
+- Containers:
+  - **Web app**: development build with hot reload
+    - Deployment node: local Vite dev server
+    - Evidence: verified: `web/vite.config.ts`
+  - **API service**: image built from `api/`
+    - Deployment node: ledgerly-local Compose project
+    - Evidence: verified: `docker-compose.yml`
+  - **Invoice database**: official PostgreSQL image
+    - Deployment node: ledgerly-local Compose project
+    - Evidence: verified: `docker-compose.yml`
+  - **PDF renderer**: image built from `renderer/`
+    - Deployment node: ledgerly-local Compose project
+    - Evidence: verified: `docker-compose.yml`
+  - **Job queue**: Redis image
+    - Deployment node: ledgerly-local Compose project
+    - Evidence: verified: `docker-compose.yml`
+  - **Worker**: image built from `worker/`
+    - Deployment node: ledgerly-local Compose project
+    - Evidence: verified: `docker-compose.yml`
+- External systems:
+  - **Payment provider**: the provider's test mode
+    - Evidence: verified: `.env.example`
+  - **Email provider**: Mailpit, catching every outgoing e-mail
+    - Evidence: verified: `docker-compose.yml`
+  - **Identity provider**: mock OIDC server
+    - Evidence: verified: `docker-compose.yml`
+
+### test
+- Purpose: end-to-end tests in CI
+- Evidence: verified: `.ci/pipeline.yml`
+- Containers:
+  - **Web app**: image serving the production build
+    - Deployment node: ledgerly-e2e Compose project
+    - Evidence: verified: `e2e/docker-compose.yml`
+  - **API service**: image built from `api/`
+    - Deployment node: ledgerly-e2e Compose project
+    - Evidence: verified: `e2e/docker-compose.yml`
+  - **Invoice database**: official PostgreSQL image
+    - Deployment node: ledgerly-e2e Compose project
+    - Evidence: verified: `e2e/docker-compose.yml`
+  - **PDF renderer**: image built from `renderer/`
+    - Deployment node: ledgerly-e2e Compose project
+    - Evidence: verified: `e2e/docker-compose.yml`
+  - **Job queue**: Redis image
+    - Deployment node: ledgerly-e2e Compose project
+    - Evidence: verified: `e2e/docker-compose.yml`
+  - **Worker**: image built from `worker/`
+    - Deployment node: ledgerly-e2e Compose project
+    - Evidence: verified: `e2e/docker-compose.yml`
+- External systems:
+  - **Payment provider**: mock server
+    - Evidence: verified: `e2e/docker-compose.yml`
+  - **Email provider**: Mailpit, catching every outgoing e-mail
+    - Evidence: verified: `e2e/docker-compose.yml`
+  - **Identity provider**: mock OIDC server
+    - Evidence: verified: `e2e/docker-compose.yml`
+
+### staging
+- Purpose: pre-release checks against production-like services
+- Evidence: verified: `infra/staging/`
+- Containers:
+  - **Web app**: static build
+    - Deployment node: ledgerly-staging Pages project
+    - Evidence: verified: `infra/staging/web.tf`
+  - **API service**: Kubernetes deployment of the API image
+    - Deployment node: ledgerly-staging cluster
+    - Evidence: verified: `infra/staging/api.tf`
+  - **Invoice database**: Amazon RDS
+    - Deployment node: invoices-staging RDS instance
+    - Evidence: verified: `infra/staging/database.tf`
+  - **PDF renderer**: Kubernetes deployment of the renderer image
+    - Deployment node: ledgerly-staging cluster
+    - Evidence: verified: `infra/staging/renderer.tf`
+  - **Job queue**: Amazon SQS
+    - Deployment node: jobs-staging SQS queue
+    - Evidence: inferred: `api/config/queue.py` reads a queue URL from the environment; no infrastructure definition in this repository
+  - **Worker**: Kubernetes deployment of the worker image
+    - Deployment node: ledgerly-staging cluster
+    - Evidence: verified: `infra/staging/worker.tf`
+- External systems:
+  - **Payment provider**: the provider's test mode
+    - Evidence: verified: `infra/staging/config.yaml`
+  - **Email provider**: the real provider, sending only to internal addresses
+    - Evidence: verified: `infra/staging/config.yaml`
+  - **Identity provider**: a staging tenant
+    - Evidence: inferred: OIDC settings in `api/config/auth.py` name no provider
+
+### production
+- Purpose: serves real customers
+- Evidence: verified: `infra/production/`
+- Containers:
+  - **Web app**: static build
+    - Deployment node: ledgerly-production Pages project
+    - Evidence: verified: `infra/production/web.tf`
+  - **API service**: Kubernetes deployment of the API image
+    - Deployment node: ledgerly-production cluster
+    - Evidence: verified: `infra/production/api.tf`
+  - **Invoice database**: Amazon RDS
+    - Deployment node: invoices-production RDS instance
+    - Evidence: verified: `infra/production/database.tf`
+  - **PDF renderer**: Kubernetes deployment of the renderer image
+    - Deployment node: ledgerly-production cluster
+    - Evidence: verified: `infra/production/renderer.tf`
+  - **Job queue**: Amazon SQS
+    - Deployment node: jobs-production SQS queue
+    - Evidence: inferred: `api/config/queue.py` reads a queue URL from the environment; no infrastructure definition in this repository
+  - **Worker**: Kubernetes deployment of the worker image
+    - Deployment node: ledgerly-production cluster
+    - Evidence: verified: `infra/production/worker.tf`
+- External systems:
+  - **Payment provider**: live account
+    - Evidence: verified: `infra/production/config.yaml`
+  - **Email provider**: the real provider
+    - Evidence: verified: `infra/production/config.yaml`
+  - **Identity provider**: the production tenant
+    - Evidence: inferred: OIDC settings in `api/config/auth.py` name no provider
 ```
