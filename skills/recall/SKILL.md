@@ -1,6 +1,6 @@
 ---
 name: recall
-description: Rebuild the DevFlow Ledger from conversation history when context has lost or degraded it. Use after compaction, when resuming a conversation, or when the Ledger feels incomplete.
+description: Use when you are the DevFlow Coordinator and the Ledger is missing or incomplete in your context: after compaction, on resuming a conversation, or when it feels thin. Otherwise use only when explicitly told to.
 ---
 
 # Recall
