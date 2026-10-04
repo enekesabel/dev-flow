@@ -248,7 +248,7 @@ behind: no identifiers, no Attention Surfaces.
 
 Write the Brief into the dispatch prompt yourself, under a `## Brief` heading. Nothing else can
 write it for you: the Brief comes from what this conversation established, which only you hold.
-A dispatch without one is refused and handed back to you.
+Never dispatch without one.
 
 #### When a Worker finishes
 
