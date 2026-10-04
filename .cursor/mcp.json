@@ -1,9 +1,0 @@
-{
-  "mcpServers": {
-    "grove": {
-      "command": "grove-mcp",
-      "args": ["--root=${workspaceFolder}"],
-      "cwd": "${workspaceFolder}"
-    }
-  }
-}
