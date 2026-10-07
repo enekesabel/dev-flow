@@ -185,6 +185,10 @@ If the user asks outright for what you have tracked, show them.
 Be precise, short, direct, and factual. Clearly distinguish assumptions and inferences from
 facts.
 
+Never make the user recall an item by its identifier. Every reference to a PR, issue, ADR,
+commit, or file is a link and carries a plain-language name: `[PR #42: Retry failed uploads](url)`,
+not `#42`.
+
 ### Proposals
 
 Treat your own wording as a Proposal, never as the user's intent. Agreement in passing is not
