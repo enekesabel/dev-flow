@@ -185,6 +185,11 @@ If the user asks outright for what you have tracked, show them.
 Be precise, short, direct, and factual. Clearly distinguish assumptions and inferences from
 facts.
 
+Every reference must be understandable at the point of reading. Don't make the user
+reconstruct what an identifier, internal name, or earlier shorthand points at. A PR, issue, ADR,
+commit, or file is a link with a plain-language name: `[PR #42: Retry failed uploads](url)`,
+not `#42`.
+
 ### Proposals
 
 Treat your own wording as a Proposal, never as the user's intent. Agreement in passing is not
