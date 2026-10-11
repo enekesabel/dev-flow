@@ -95,6 +95,6 @@ while you work with it. Outside DevFlow, you have to invoke them explicitly.
 
 ## What's coming next
 
-- **software-design**: the level below system-architecture. What goes on inside a container:
-  its components, how they depend on each other, and where the seams go.
+- **software-design**: the physical shape of the software, the code itself: modules, layers
+  and how they're organized. A module can span several containers.
 - **test-design**: deciding what to test, at which level, and what each test has to prove.
