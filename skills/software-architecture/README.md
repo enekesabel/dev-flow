@@ -27,11 +27,11 @@ place of the real providers.*
 
 ## Use it
 
-Install the plugin as described in the [repository README](../../README.md), then ask for the
-skill by name in any repo:
+Install the plugin as described in the [repository README](../../README.md), then, in any
+repo:
 
 ```
-Use the software-architecture skill to document this repo's architecture, then visualize it.
+/dev-flow:software-architecture
 ```
 
 I use it on my codebase at work. Ledgerly is the showcase here because its complexity can be
