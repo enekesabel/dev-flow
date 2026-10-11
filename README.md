@@ -100,4 +100,4 @@ while you work with it. Outside DevFlow, you have to invoke them explicitly.
 - **test-design**: tests that protect one clear requirement, at one level, through the right
   seam, and change only when that requirement changes.
 
-Follow [@enekes_abel](https://x.com/enekes_abel) on X for updates.
+Star the repo or follow me on X at [@enekes_abel](https://x.com/enekes_abel) for updates.
