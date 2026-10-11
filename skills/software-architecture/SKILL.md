@@ -5,8 +5,6 @@ description: Use when you are the DevFlow Coordinator and the conversation turns
 
 # Software Architecture
 
-The concepts used here (Systems Thinking, Complexity and Abstraction) are defined in the [Coordinator's agent definition](../../agents/devflow.md).
-
 ## How to look at software systems
 
 A software system has no single true picture. Two established frameworks capture this:
