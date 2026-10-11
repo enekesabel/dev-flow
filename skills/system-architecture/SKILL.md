@@ -72,7 +72,6 @@ inside one of the system's containers, such as an embedded third-party widget.
 - To write an architecture document, follow [references/architecture-document.md](references/architecture-document.md).
 - To visualize the architecture, follow [references/architecture-visualization.md](references/architecture-visualization.md).
 
-
 ## Before you finish
 
 Check the picture against itself. A failed check is a finding to raise with the user, with
