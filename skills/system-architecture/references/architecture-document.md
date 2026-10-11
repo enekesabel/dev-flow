@@ -91,3 +91,13 @@ or a managed service, without repeating its Technology or its deployment node.
 
 See [architecture-document-example.md](architecture-document-example.md) for a filled-in
 example.
+
+## Before you finish
+
+Check the document against itself. A failed check is a finding to raise with the user, with
+what you found and where, not something to resolve on your own.
+
+- Every actor, external system and container takes part in at least one connection.
+- Every connection has an actor, external system or container at each end.
+- Every element and connection carries evidence, verified or inferred.
+- Every environment lists every container and every external system.

@@ -45,6 +45,10 @@ Identify the boundary first, then what crosses it.
 - **External systems** — other software systems outside the boundary that provide a capability
   the system relies on; the system's team does not own or have responsibility for them (C4).
 
+Ownership decides where something that runs belongs, not where its code lives or how it is
+packaged: what the system's team builds or runs is inside the boundary, as a container or as
+part of one; what another party builds and runs is an external system.
+
 ## Containers
 
 A container is a runtime unit inside the boundary: something that needs to be running for the
@@ -67,4 +71,3 @@ inside one of the system's containers, such as an embedded third-party widget.
 
 - To write an architecture document, follow [references/architecture-document.md](references/architecture-document.md).
 - To visualize the architecture, follow [references/architecture-visualization.md](references/architecture-visualization.md).
-
