@@ -72,3 +72,13 @@ inside one of the system's containers, such as an embedded third-party widget.
 - To write an architecture document, follow [references/architecture-document.md](references/architecture-document.md).
 - To visualize the architecture, follow [references/architecture-visualization.md](references/architecture-visualization.md).
 
+
+## Before you finish
+
+Check the picture against itself. A failed check is a finding to raise with the user, with
+what you found and where, not something to resolve on your own.
+
+- Every actor, external system and container takes part in at least one connection.
+- Every connection has an actor, external system or container at each end.
+- Every element and connection carries evidence, verified or inferred.
+- Every environment lists every container and every external system.
