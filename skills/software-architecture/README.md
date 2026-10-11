@@ -40,7 +40,9 @@ tuned freely.
 ## How it looks at a system
 
 A system has no single true picture, so the skill works with two established frameworks:
-the C4 model's zoom levels, and the 4+1 architectural views as lenses. The document stops at
+the [C4 model](https://c4model.com/)'s zoom levels, and the
+[4+1 architectural views](https://en.wikipedia.org/wiki/4%2B1_architectural_view_model) as
+lenses. The document stops at
 the Container level, since components are inferable from code. The diagram follows the
 Physical lens: containers that share a deployment node in the chosen environment are grouped.
 

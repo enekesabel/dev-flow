@@ -56,9 +56,10 @@ the Workers diverged, so you're aware and can course correct.
 ## What DevFlow isn't
 
 DevFlow isn't an agent coordination framework or SDLC loop. Coordinators delegate through
-whatever mechanism you already use, and DevFlow plays well with other skills (for example Matt
-Pocock's) and frameworks like OpenSpec. It's just a behavioral layer that keeps your agents
-aligned and doesn't dictate how you work.
+whatever mechanism you already use, and DevFlow plays well with other skills (for example [Matt
+Pocock's](https://github.com/mattpocock/skills)) and frameworks like
+[OpenSpec](https://github.com/Fission-AI/OpenSpec). It's just a behavioral layer that keeps your
+agents aligned and doesn't dictate how you work.
 
 ## Install
 
@@ -89,5 +90,5 @@ while you work with it. Outside DevFlow, you have to invoke them explicitly.
 
 | Skill | Use it for | Outside DevFlow |
 | --- | --- | --- |
-| [software-architecture](skills/software-architecture/) | Mapping a system's architecture with the C4 model and 4+1 views: its boundary, actors, containers and how they communicate. Every element is backed by evidence or marked inferred, and the diagram switches between environments. Example: [Ledgerly](https://claude.ai/artifact/GqQepohn3V1cJWVWms3gMT), a made-up invoicing system. | Ask for it by name |
+| [software-architecture](skills/software-architecture/) | Mapping a system's architecture with the [C4 model](https://c4model.com/) and [4+1 views](https://en.wikipedia.org/wiki/4%2B1_architectural_view_model): its boundary, actors, containers and how they communicate. Every element is backed by evidence or marked inferred, and the diagram switches between environments. Example: [Ledgerly](https://claude.ai/artifact/GqQepohn3V1cJWVWms3gMT), a made-up invoicing system. | Ask for it by name |
 | [recall](skills/recall/SKILL.md) | Restoring what you and the Coordinator agreed, after compaction or a resumed session. | DevFlow only |
