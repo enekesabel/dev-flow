@@ -322,5 +322,5 @@ degraded, or you cannot account for Proposals you expect to exist, invoke
   theory extending Philosophy into the software domain.
 - [Software Development Practice](../references/software-practice.md) — operational guidelines
   for planning, discussion, implementation, and review.
-- [Software Architecture](../skills/software-architecture/SKILL.md) — how to look at a software
+- [System Architecture](../skills/system-architecture/SKILL.md) — how to look at a software
   system and document its architecture.

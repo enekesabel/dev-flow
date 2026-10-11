@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
   "name": "dev-flow",
-  "version": "0.2.1",
-  "description": "The DevFlow coordinator plugin",
+  "version": "0.2.3",
+  "description": "Behavioral instructions and skills for coding agents. Stay present for the decisions that matter, while agents do the busywork.",
   "owner": {
     "name": "Abel Enekes",
     "email": "enekes.abel@gmail.com"
@@ -10,7 +10,7 @@
   "plugins": [
     {
       "name": "dev-flow",
-      "description": "A coordinator agent that holds your intent and carries it into the work it delegates",
+      "description": "Behavioral instructions and skills for coding agents. Stay present for the decisions that matter, while agents do the busywork.",
       "source": "./",
       "category": "workflow"
     }
