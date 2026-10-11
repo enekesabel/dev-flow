@@ -97,4 +97,5 @@ while you work with it. Outside DevFlow, you have to invoke them explicitly.
 
 - **software-design**: the physical shape of the software, the code itself: modules, layers
   and how they're organized. A module can span several containers.
-- **test-design**: deciding what to test, at which level, and what each test has to prove.
+- **test-design**: tests designed around the Promise they protect, with a Contract that enforces
+  it, so a test changes only when its requirement does, not when a button moves.
