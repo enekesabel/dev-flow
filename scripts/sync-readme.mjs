@@ -8,7 +8,7 @@
 //
 // `path` is relative to the README. `from` (inclusive) and `to` (exclusive) are whole lines
 // of the file, compared after trimming; both are optional. `shift` demotes headings by that
-// many levels.
+// many levels. `code` wraps the content in a fenced code block of that language.
 //
 // Usage: node scripts/sync-readme.mjs          rewrite stale READMEs
 //        node scripts/sync-readme.mjs --check  exit 1 if any README is stale
@@ -87,6 +87,7 @@ function render(readme, text) {
       throw new Error(`${readme}:${i + 1}: ${error.message} in ${path}`);
     }
     body = trimBlank(shiftHeadings(body, Number(attrs.shift ?? 0)));
+    if (attrs.code !== undefined) body = ["```" + attrs.code, ...body, "```"];
     out.push("", ...body, "", lines[close]);
     i = close;
   }

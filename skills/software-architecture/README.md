@@ -27,8 +27,8 @@ place of the real providers.*
 
 ## Use it
 
-With a DevFlow Coordinator, the skill triggers on its own whenever the conversation turns to a
-system's architecture. Outside DevFlow, ask for it by name in any repo:
+Install the plugin as described in the [repository README](../../README.md), then ask for the
+skill by name in any repo:
 
 ```
 Use the software-architecture skill to document this repo's architecture, then visualize it.
@@ -55,13 +55,16 @@ The details are in [SKILL.md](SKILL.md) and its references:
 The architecture document for Ledgerly, as the skill writes it. The live diagram above was
 built on a larger version of Ledgerly than this document describes.
 
-<!-- include: references/architecture-document-example.md from="## Context" to="## Environments" shift=1 -->
+<!-- include: references/architecture-document-example.md from="# Architecture" to="```" code=markdown -->
 
-### Context
+```markdown
+# Architecture
+
+## Context
 
 Ledgerly lets small businesses send invoices and get paid online.
 
-#### Actors
+### Actors
 - **Business users**: staff of the small businesses using Ledgerly
   - Goal: bill their customers and get paid
   - Evidence: verified: `web/src/routes/`
@@ -72,7 +75,7 @@ Ledgerly lets small businesses send invoices and get paid online.
   - Goal: keep the books in sync with invoices and payments
   - Evidence: verified: `api/routes/public.py`
 
-#### External systems
+### External systems
 - **Payment provider**
   - Provides: card payment processing
   - Evidence: verified: `api/payments/client.py`
@@ -83,38 +86,38 @@ Ledgerly lets small businesses send invoices and get paid online.
   - Provides: sign-in for business users
   - Evidence: inferred: OIDC settings in `api/config/auth.py` name no provider
 
-### Containers
+## Containers
 
-#### Web app
+### Web app
 - Responsibility: the screens for business users and the public invoice page for customers
 - Technology: TypeScript single-page app
 - Evidence: verified: `web/`
 
-#### API service
+### API service
 - Responsibility: invoices, customers, payments, and API keys
 - Technology: Python web service
 - Evidence: verified: `api/`
 
-#### Invoice database
+### Invoice database
 - Responsibility: stored invoices, customers, payments, and accounts
 - Technology: PostgreSQL
 - Evidence: verified: `api/db/migrations/`
 
-#### PDF renderer
+### PDF renderer
 - Responsibility: turns invoices into PDFs
 - Technology: headless-browser render service
 - Evidence: verified: `renderer/`
 
-#### Job queue
+### Job queue
 - Responsibility: holds e-mail and reminder jobs until the worker takes them
 - Evidence: verified: `api/jobs/`
 
-#### Worker
+### Worker
 - Responsibility: sends invoice and reminder e-mails, and finds overdue invoices for reminders
 - Technology: Python worker process
 - Evidence: verified: `worker/`
 
-### Communication
+## Communication
 - **Business users → Web app**
   - Flows:
     - → invoice and settings edits
@@ -180,16 +183,9 @@ Ledgerly lets small businesses send invoices and get paid online.
     - ← e-mail and reminder jobs
   - Evidence: verified: `worker/main.py`
 
-<!-- /include -->
+## Environments
 
-<details>
-<summary>Environments: local, test, staging, production</summary>
-
-<!-- include: references/architecture-document-example.md from="## Environments" to="```" shift=1 -->
-
-### Environments
-
-#### local
+### local
 - Purpose: development on a laptop
 - Evidence: verified: `docker-compose.yml`
 - Containers:
@@ -219,7 +215,7 @@ Ledgerly lets small businesses send invoices and get paid online.
   - **Identity provider**: mock OIDC server
     - Evidence: verified: `docker-compose.yml`
 
-#### test
+### test
 - Purpose: end-to-end tests in CI
 - Evidence: verified: `.ci/pipeline.yml`
 - Containers:
@@ -249,7 +245,7 @@ Ledgerly lets small businesses send invoices and get paid online.
   - **Identity provider**: mock OIDC server
     - Evidence: verified: `e2e/docker-compose.yml`
 
-#### staging
+### staging
 - Purpose: pre-release checks against production-like services
 - Evidence: verified: `infra/staging/`
 - Containers:
@@ -279,7 +275,7 @@ Ledgerly lets small businesses send invoices and get paid online.
   - **Identity provider**: a staging tenant
     - Evidence: inferred: OIDC settings in `api/config/auth.py` name no provider
 
-#### production
+### production
 - Purpose: serves real customers
 - Evidence: verified: `infra/production/`
 - Containers:
@@ -308,7 +304,6 @@ Ledgerly lets small businesses send invoices and get paid online.
     - Evidence: verified: `infra/production/config.yaml`
   - **Identity provider**: the production tenant
     - Evidence: inferred: OIDC settings in `api/config/auth.py` name no provider
+```
 
 <!-- /include -->
-
-</details>
