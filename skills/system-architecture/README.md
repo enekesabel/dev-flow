@@ -1,4 +1,4 @@
-# software-architecture
+# system-architecture
 
 Identifies a software system's architecture from its code and configuration, writes it down as
 an architecture document, and draws it as an interactive diagram that switches between
@@ -31,7 +31,7 @@ Install the plugin as described in the [repository README](../../README.md), the
 repo:
 
 ```
-/dev-flow:software-architecture
+/dev-flow:system-architecture
 ```
 
 I use it on my codebase at work. Ledgerly is the showcase here because its complexity can be
