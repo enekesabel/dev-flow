@@ -92,3 +92,9 @@ while you work with it. Outside DevFlow, you have to invoke them explicitly.
 | --- | --- | --- |
 | [system-architecture](skills/system-architecture/README.md) | Documenting a system's architecture, with evidence, and drawing it as a diagram that switches between environments. | `/dev-flow:system-architecture` |
 | [recall](skills/recall/SKILL.md) | Restoring what you and the Coordinator agreed, after compaction or a resumed session. | DevFlow only |
+
+## What's coming next
+
+- **software-design**: the level below system-architecture. What goes on inside a container:
+  its components, how they depend on each other, and where the seams go.
+- **test-design**: deciding what to test, at which level, and what each test has to prove.
