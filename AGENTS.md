@@ -3,7 +3,7 @@
 This repository is the DevFlow plugin.
 
 - Coordinator: [`agents/devflow.md`](agents/devflow.md)
-- Skills: [`skills/recall/`](skills/recall/SKILL.md)
+- Skills: [`skills/`](skills/), one folder per skill, each with a `SKILL.md`
 
 ## Structure of the Coordinator
 
@@ -15,3 +15,9 @@ The agent definition has three layers:
 
 Philosophy informs Theory. Theory informs Practice. Edits should land in the layer they belong
 to.
+
+## READMEs
+
+A README embeds content from other files between `<!-- include: ... -->` and `<!-- /include -->`
+markers. After editing a file that a README includes, run `node scripts/sync-readme.mjs`; CI
+fails when a README is out of date.
