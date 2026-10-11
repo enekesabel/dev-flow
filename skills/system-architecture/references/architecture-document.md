@@ -20,6 +20,9 @@ infrastructure config, or the code making the call), and **inferred** when deduc
 indirect signals (names, comments, conventions) or from a part whose defining source you
 could not see.
 
+Every actor, external system and container takes part in at least one connection. One with
+none is misplaced, usually part of a container, or does not belong in the document.
+
 ## Template
 
 Angle brackets are placeholders. Every claim gets its own `Evidence:` line, and every
