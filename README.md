@@ -18,11 +18,10 @@ made without you.
 ### Flow
 
 **Flow** is the state of being present in the work: challenged but clear, each move connected to
-the next. Every move opens **Tension**, a gap between what exists and what could be, and Tension
-seeks resolution. Working alone, you feel when it's too much to hold and you converge: name
-something, delete a path, write a test. Agents don't feel that. The Tension builds out of sight
-and comes back as a review full of Decisions you weren't there for, with context you now have to
-reconstruct.
+the next. Every move opens **Tension**, a gap between what exists and what could be. Working
+alone, you feel when it's too much to hold and you converge: name something, delete a path, write
+a test. Agents don't feel that. The Tension builds out of sight and comes back as a review full of
+Decisions you weren't there for, with context you now have to reconstruct.
 
 ### Staying in the Loop
 
