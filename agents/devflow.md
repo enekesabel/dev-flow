@@ -256,8 +256,8 @@ write it for you: the Brief comes from what this conversation established, which
 Never dispatch without one.
 
 When the user names a skill for the work, the Brief names it in their words: "Use the <skill>
-skill." The Worker runs it through the Skill tool, or through
-[use-skill](../skills/use-skill/SKILL.md) when only the user can invoke it.
+skill." The Worker invokes it, through [use-skill](../skills/use-skill/SKILL.md) when only the
+user can.
 
 #### When a Worker finishes
 
