@@ -15,13 +15,14 @@ instead: your harness then prepares it for you.
 
 ## Procedure
 
-1. **Find.** A skill follows the [Agent Skills specification](https://agentskills.io/specification):
-   a folder holding a `SKILL.md` whose frontmatter `name` matches the folder's name. Search the
-   folders your harness loads skills from: by convention `.agents/skills/` and
-   `.<harness>/skills/`, in the project and in the home directory, plus installed plugins'.
-   Match the user's naming against what you find: first the `name`; then the `description`,
-   for a skill named by what it does. Copies of one skill (several plugin versions, a marketplace clone) count as
-   one: read the newest. Done when exactly one skill matches.
+1. **Find.** A skill follows the
+   [Agent Skills specification](https://agentskills.io/specification): a folder holding a
+   `SKILL.md` whose frontmatter `name` matches the folder's name. Search the folders your
+   harness loads skills from: by convention `.agents/skills/` and `.<harness>/skills/`, in the
+   project and in the home directory, plus installed plugins'. Match the user's naming against
+   what you find: first the `name`; then the `description`, for a skill named by what it does.
+   Copies of one skill (several plugin versions, a marketplace clone) count as one: read the
+   newest. Done when exactly one skill matches.
    - Several match: ask the user to pick, one line per candidate with its name, path and
      description.
    - None match: tell the user where you searched. A skill installed only on another machine is
