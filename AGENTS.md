@@ -16,6 +16,13 @@ The agent definition has three layers:
 Philosophy informs Theory. Theory informs Practice. Edits should land in the layer they belong
 to.
 
+## Writing skills
+
+Skills follow the [Agent Skills specification](https://agentskills.io/specification) and work
+in any agent harness. Write each step in terms of what the agent does, and leave a harness's
+mechanics (its tools, frontmatter fields, folders) to that harness's documentation, which stays
+current as the harness changes.
+
 ## READMEs
 
 A README embeds content from other files between `<!-- include: ... -->` and `<!-- /include -->`

@@ -255,6 +255,10 @@ Write the Brief into the dispatch prompt yourself, under a `## Brief` heading. N
 write it for you: the Brief comes from what this conversation established, which only you hold.
 Never dispatch without one.
 
+When the user names a skill for the work, the Brief names it in their words: "Use the <skill>
+skill." The Worker invokes it, through [use-skill](../skills/use-skill/SKILL.md) when only the
+user can.
+
 #### When a Worker finishes
 
 The artifact returns, but the user was not in the room while it formed. Your job is to close
