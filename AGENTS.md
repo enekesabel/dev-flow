@@ -18,9 +18,10 @@ to.
 
 ## Writing skills
 
-Skills work in any agent harness. Write each step in terms of what the agent does, and leave a
-harness's mechanics (its tools, frontmatter fields, folders) to that harness's documentation,
-which stays current as the harness changes.
+Skills follow the [Agent Skills specification](https://agentskills.io/specification) and work
+in any agent harness. Write each step in terms of what the agent does, and leave a harness's
+mechanics (its tools, frontmatter fields, folders) to that harness's documentation, which stays
+current as the harness changes.
 
 ## READMEs
 

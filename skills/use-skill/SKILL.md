@@ -15,10 +15,12 @@ instead: your harness then prepares it for you.
 
 ## Procedure
 
-1. **Find.** Search the folders your harness loads skills from (the project's, the user's, and
-   installed plugins') for `SKILL.md` files, and match the user's naming against them: first
-   the frontmatter `name` or the skill's folder name; then the `description`, for a skill named
-   by what it does. Copies of one skill (several plugin versions, a marketplace clone) count as
+1. **Find.** A skill follows the [Agent Skills specification](https://agentskills.io/specification):
+   a folder holding a `SKILL.md` whose frontmatter `name` matches the folder's name. Search the
+   folders your harness loads skills from: by convention `.agents/skills/` and
+   `.<harness>/skills/`, in the project and in the home directory, plus installed plugins'.
+   Match the user's naming against what you find: first the `name`; then the `description`,
+   for a skill named by what it does. Copies of one skill (several plugin versions, a marketplace clone) count as
    one: read the newest. Done when exactly one skill matches.
    - Several match: ask the user to pick, one line per candidate with its name, path and
      description.
@@ -32,12 +34,13 @@ instead: your harness then prepares it for you.
    find ./.[!.]* ~/.[!.]* -name SKILL.md 2>/dev/null
    ```
 
-2. **Prepare.** Read the whole file. A harness can transform a skill when it invokes it:
-   substitute the arguments into placeholders, insert the output of shell commands, resolve
-   paths against the skill's folder. Do each of those yourself, the way your harness would;
-   its documentation is the source for syntax you don't recognize. The **arguments** are what
-   the user would have typed after the slash command ("use the tdd skill on the parser" gives
-   `the parser`). Done when nothing is left in the text that invocation would have replaced.
+2. **Prepare.** Read the whole file, and resolve its relative paths against the skill's
+   folder, as the specification does. Beyond the specification, a harness can transform a
+   skill when it invokes it: substitute the arguments into placeholders, insert the output of
+   shell commands. Do each of those yourself, the way your harness would; its documentation is
+   the source for syntax you don't recognize. The **arguments** are what the user would have
+   typed after the slash command ("use the tdd skill on the parser" gives `the parser`). Done
+   when nothing is left in the text that invocation would have replaced.
 
 3. **Run.** Tell the user in one line which file you are running. Then follow the prepared
    skill as if they had invoked it, to the skill's own completion criteria. When the skill
