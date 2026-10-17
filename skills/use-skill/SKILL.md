@@ -34,10 +34,10 @@ instead: your harness then prepares it for you.
 
 2. **Prepare.** Read the whole file. A harness can transform a skill when it invokes it:
    substitute the arguments into placeholders, insert the output of shell commands, resolve
-   paths against the skill's folder. Do each of those yourself, the way your harness
-   would. The **arguments** are what the user would have typed after the slash command ("use
-   the tdd skill on the parser" gives `the parser`). Done when nothing is left in the text that
-   invocation would have replaced.
+   paths against the skill's folder. Do each of those yourself, the way your harness would;
+   its documentation is the source for syntax you don't recognize. The **arguments** are what
+   the user would have typed after the slash command ("use the tdd skill on the parser" gives
+   `the parser`). Done when nothing is left in the text that invocation would have replaced.
 
 3. **Run.** Tell the user in one line which file you are running. Then follow the prepared
    skill as if they had invoked it, to the skill's own completion criteria. When the skill
@@ -48,22 +48,3 @@ instead: your harness then prepares it for you.
 
 When the user asks which skills only they can invoke, search the same folders, keep the skills
 your harness marks as user-invoked, and list each on one line: its name, path and description.
-
-## Harness specifics
-
-### Claude Code
-
-- **User-invoked**: frontmatter sets `disable-model-invocation: true`. The Skill tool refuses
-  these.
-- **Folders**: `.claude/skills/` in the project, `~/.claude/skills/`, and `~/.claude/plugins/`.
-  Skills can sit in nested folders below each.
-- **Placeholders**: `$ARGUMENTS` (all arguments), `$ARGUMENTS[N]` and `$N` (0-based
-  positions), `$<name>` (positions named by the `arguments` frontmatter list),
-  `${CLAUDE_SKILL_DIR}` (the skill's folder), `${CLAUDE_PLUGIN_ROOT}` (the plugin's folder),
-  `${CLAUDE_PROJECT_DIR}` (the project root). With arguments and no `$ARGUMENTS` in the body,
-  append `ARGUMENTS: <arguments>`. A placeholder with no value to give stays as written. `\$` is
-  a literal dollar sign.
-- **Shell commands**: `` !`command` `` inline (at a line start or after whitespace) and
-  ` ```! ` fenced blocks. Run each from the project root and put its output in its place. A
-  failing command aborts invocation: stop and tell the user which command failed.
-- **Separate context**: `context: fork`, with `agent` naming the subagent type.
