@@ -22,9 +22,10 @@ instead: your harness then prepares it for you.
    project and in the home directory, plus installed plugins'. Match the user's naming against
    what you find: first the `name`; then the `description`, for a skill named by what it does.
    Copies of one skill (several plugin versions, a marketplace clone) count as one: read the
-   newest. Done when exactly one skill matches.
-   - Several match: ask the user to pick, one line per candidate with its name, path and
-     description.
+   newest. When the project and the home directory both have a skill with that name, the
+   project's wins. Done when exactly one skill matches.
+   - Several different skills match: ask the user to pick, one line per candidate with its
+     name, path and description.
    - None match: tell the user where you searched. A skill installed only on another machine is
      not reachable from here.
 
