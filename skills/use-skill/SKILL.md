@@ -18,21 +18,19 @@ tell the user it is theirs to invoke, with the command to type.
 
 1. **Find.** A skill follows the
    [Agent Skills specification](https://agentskills.io/specification): a folder holding a
-   `SKILL.md` whose frontmatter `name` matches the folder's name. Search the folders your
-   harness loads skills from: by convention `.agents/skills/` and `.<harness>/skills/`, in the
-   project and in the home directory, plus installed plugins'. Match the user's whole naming,
-   including an author or source they give, against what you find: first the `name` and the
-   skill's path; then the `description`, for a skill named by what it does. Copies of one
-   skill (several plugin versions, a marketplace clone) count as one: read the newest. When
-   the project and the home directory both have a skill with that name, the project's wins.
-   Done when exactly one skill matches.
+   `SKILL.md` whose frontmatter `name` matches the folder's name. Harnesses keep skills in
+   folders such as `.agents/skills/`, `.<harness>/skills/` and installed plugins', in the
+   project and in the home directory, sometimes several levels deep. Search for `**/SKILL.md`
+   with your file-search tool from two roots: the project root and `$HOME`. Match the user's
+   whole naming, including an author or source they give, against what you find: first the
+   `name` and the skill's path; then the `description`, for a skill named by what it does.
+   Copies of one skill (several plugin versions, a marketplace clone) count as one: read the
+   newest. When the project and the home directory both have a skill with that name, the
+   project's wins. Done when exactly one skill matches.
    - Several different skills match: ask the user to pick, one line per candidate with its
      name, path and description.
    - None match: tell the user where you searched. A skill installed only on another machine is
      not reachable from here.
-
-   When you don't know your harness's skill folders, use your file-search tool to find
-   `SKILL.md` files under the project and your home directory (`$HOME`), and only there.
 
 2. **Prepare.** Read the whole file, and resolve its relative paths against the skill's
    folder, as the specification does. Beyond the specification, a harness can transform a
@@ -43,9 +41,12 @@ tell the user it is theirs to invoke, with the command to type.
    when nothing is left in the text that invocation would have replaced.
 
 3. **Run.** Before anything else, tell the user in one line which skill you are running and
-   its path. Then follow the prepared skill as if they had invoked it, to the skill's own
-   completion criteria. When the skill declares that it runs in a separate context, hand it to
-   a subagent as its prompt and relay the result.
+   the full path to its `SKILL.md`. Then follow the prepared skill as if they had invoked it,
+   to the skill's own completion criteria. When the skill declares that it runs in a separate
+   context, hand it to a subagent as its prompt and relay the result.
+
+   When the skill's work goes to another agent, put the skill's name and full path in the
+   hand-off, so that agent reads and runs the file itself. A summary loses the skill's detail.
 
 ## Listing user-invoked skills
 
