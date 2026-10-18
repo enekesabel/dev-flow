@@ -32,7 +32,7 @@ tell the user it is theirs to invoke, with the command to type.
      not reachable from here.
 
    When you don't know your harness's skill folders, use your file-search tool to find
-   `SKILL.md` files under the project and the home directory.
+   `SKILL.md` files under the project and your home directory (`$HOME`), and only there.
 
 2. **Prepare.** Read the whole file, and resolve its relative paths against the skill's
    folder, as the specification does. Beyond the specification, a harness can transform a
