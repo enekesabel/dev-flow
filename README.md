@@ -90,6 +90,7 @@ while you work with it. Outside DevFlow, you have to invoke them explicitly.
 | Skill | Use it for | Outside DevFlow |
 | --- | --- | --- |
 | [system-architecture](skills/system-architecture/README.md) | Documenting a system's architecture, with evidence, and drawing it as a diagram that switches between environments. | `/dev-flow:system-architecture` |
+| [use-skill](skills/use-skill/README.md) | Letting agents run skills only you can invoke, when you name them in plain words or in a handoff. | Works on its own: name the skill |
 | [recall](skills/recall/SKILL.md) | Restoring what you and the Coordinator agreed, after compaction or a resumed session. | DevFlow only |
 
 ## What's coming next
