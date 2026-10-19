@@ -1,6 +1,6 @@
 {
   "name": "dev-flow",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Behavioral instructions and skills for coding agents. Stay present for the decisions that matter, while agents do the busywork.",
   "outputStyles": "./agents/",
   "skills": "./skills/",
