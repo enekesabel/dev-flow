@@ -4,16 +4,22 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install skills-ref==0.1.1
+      # The Agent Skills reference validator, installed from its official repository at a pinned commit.
+      - run: pip install "git+https://github.com/agentskills/agentskills@69ef37e9424c0a7ea9dd2293b559e43ec8176379#subdirectory=skills-ref"
       - run: |
           status=0
-          for skill in skills/*/; do agentskills validate "$skill" || status=1; done
+          for skill in skills/*/; do skills-ref validate "$skill" || status=1; done
           exit $status
