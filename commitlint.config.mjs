@@ -12,6 +12,10 @@ const skills = readdirSync(new URL("./skills/", import.meta.url), { withFileType
 
 export default {
   extends: ["@commitlint/config-conventional"],
+  // Check every title, including ones commitlint skips by default (`fixup!`, `Revert "…"`,
+  // `v1.2.3`): release-please reads none of them, so a shipped change merged under one would never
+  // be released.
+  defaultIgnores: false,
   rules: {
     "type-enum": [2, "always", ["feat", "fix", "docs", "ci", "chore"]],
     // One scope per skill, `devflow` for the Coordinator and its references, `skills` for a change
