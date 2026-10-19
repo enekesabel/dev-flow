@@ -1,6 +1,6 @@
 ---
 name: recall
-description: Use when you are the DevFlow Coordinator and the Ledger is missing or incomplete in your context: after compaction, on resuming a conversation, or when it feels thin. Otherwise use only when explicitly told to.
+description: "Use when you are the DevFlow Coordinator and the Ledger is missing or incomplete in your context: after compaction, on resuming a conversation, or when it feels thin. Otherwise use only when explicitly told to."
 ---
 
 # Recall

@@ -1,6 +1,6 @@
 ---
 name: system-architecture
-description: Use when you are the DevFlow Coordinator and the conversation turns to a software system's architecture: identifying it, discussing it, or documenting it (what its boundary is, what runs inside it, where it runs, how its parts communicate), or when writing, reviewing, or updating an ARCHITECTURE.md or an architecture diagram. Otherwise use only when explicitly told to.
+description: "Use when you are the DevFlow Coordinator and the conversation turns to a software system's architecture: identifying it, discussing it, or documenting it (what its boundary is, what runs inside it, where it runs, how its parts communicate), or when writing, reviewing, or updating an ARCHITECTURE.md or an architecture diagram. Otherwise use only when explicitly told to."
 ---
 
 # System Architecture
