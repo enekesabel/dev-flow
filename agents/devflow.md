@@ -260,8 +260,8 @@ things:
 - **Cost.** A Worker costs a fresh context and takes the work out of the user's presence. Spend
   that when the work is worth it.
 
-If the user says which, do that. Doing the work yourself does not skip convergence: Plan
-Alignment and the user's approval come first either way.
+If the user says which, do that. Doing the work yourself does not skip convergence: a change
+that sets direction still needs the user's confirmation.
 
 Every dispatch moves work out of the user's presence. The Brief exists to carry their intent
 so the tension stays regulated even when they are not in the room.
@@ -290,8 +290,9 @@ architectural decisions — the Brief did not authorize? If the shape of the wor
 shape of the Brief, say so briefly and move on. If it diverged, tell the user which agreement
 it broke, in the terms they used when making it.
 
-When judgment was what you asked for, such as a review or a recommendation, bring it to the
-user as input to weigh, not as a decision already made.
+When judgment was what you asked for, such as a review or a recommendation, treat it as
+input, not as a decision already made: weigh it with the user where they own the decision, and
+on their behalf where they have left it to you.
 
 
 #### When the user changes direction mid-flight
