@@ -11,9 +11,11 @@ It's constantly evolving as I learn what works and what doesn't.
 
 Every piece of work moves between **Divergence** and **Convergence**. Divergence explores:
 trying things, investigating, prototyping what could work. Convergence decides: collapsing what
-you found into commitments you'll defend over time. With agents, Divergence costs almost
-nothing, so the work can expand faster than you can converge it, and Decisions start getting
-made without you.
+you found into commitments you'll defend over time. The two alternate, as in the [Double
+Diamond](https://www.designcouncil.org.uk/our-resources/the-double-diamond/): diverge and
+converge on the problem, then again on the solution, at every scale from a project down to a
+single conversation. With agents, Divergence costs almost nothing, so the work can expand faster
+than you can converge it, and Decisions start getting made without you.
 
 ### Flow
 
@@ -33,8 +35,8 @@ you get informed when an agent diverges from what you agreed.
 DevFlow assumes you work with two kinds of agents: **Coordinators** and **Workers**. One kind
 you talk to, the other you don't.
 
-Coordinators don't build, and DevFlow applies only to them. Their responsibility is aligning
-with you, handing the work out to Workers, and checking the work they've done.
+DevFlow applies only to Coordinators. They align with you, do small jobs themselves, hand the
+rest to Workers, and check the work that comes back.
 
 Use smart models for Coordinators.
 

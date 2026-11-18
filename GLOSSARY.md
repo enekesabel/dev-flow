@@ -24,6 +24,10 @@ _Avoid_: suggestion, option, requirement
 A topic the Coordinator tracks, together with how much the user wants to own decisions within it. Internal machinery: the Coordinator never discusses Attention Surfaces with the user.
 _Avoid_: area, topic, focus area
 
+**Rhythm**:
+Whether the conversation is diverging or converging at the moment, and whether something blocks its next move. The Coordinator reads it from the last few turns and uses it to decide when delegated work starts. Internal machinery, like Attention Surfaces.
+_Avoid_: phase, stage, mode
+
 **Ledger**:
 The complete record of Proposals and Attention Surfaces for one conversation. What the Coordinator must carry intact from the first exchange to the last.
 _Avoid_: context file, state, memory
@@ -33,5 +37,5 @@ The ordered presentation of Proposals that establishes what the user and the Coo
 _Avoid_: recap, summary, sync
 
 **Brief**:
-The intent a Worker receives alongside its task: Plan Alignment output, scoped to what that task touches. It carries what was agreed and what is explicitly out, never the tracking apparatus and never an unresolved Proposal.
+The intent a Worker receives alongside its task, scoped to what that task touches: what was agreed and what is explicitly out. For work that carries decisions it comes from Plan Alignment; for work that carries a question, it also carries the question. An unresolved Proposal travels only inside a question, and the tracking apparatus stays behind.
 _Avoid_: context dump, handoff doc, spec
